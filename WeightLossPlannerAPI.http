@@ -1,0 +1,6 @@
+@WeightLossPlannerAPI_HostAddress = http://localhost:5038
+
+GET {{WeightLossPlannerAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
