@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WeightLossPlannerAPI.Data;
 using WeightLossPlannerAPI.Models;
 
@@ -7,6 +8,8 @@ namespace WeightLossPlannerAPI.Controllers
     /// <summary>
     /// Manages user-related actions.
     /// </summary>
+    [ApiController]
+    [Route("api/[controller]")]
     public class MealLogController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -16,14 +19,15 @@ namespace WeightLossPlannerAPI.Controllers
         }
 
         // GET: api/meallog
-        public async ActionResult<IEnumerable<UserProfile>> GetAllMeals()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MealLog>>> GetAllMeals()
         {
             return await _context.MealLogs.Include(m => m.UserProfile).ToListAsync();
         }
 
         // GET: api/meallog/user/1
         [HttpGet("user/{userId}")]
-        public async ActionResult<IEnumerable<UserProfile>> GetMealsByUser(int userId)
+        public async Task<ActionResult<IEnumerable<MealLog>>> GetMealsByUser(int userId)
         {
             return await _context.MealLogs
                 .Where(m => m.UserProfileId == userId)
